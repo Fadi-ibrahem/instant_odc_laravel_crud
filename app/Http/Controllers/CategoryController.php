@@ -41,11 +41,15 @@ class CategoryController extends Controller
             'description'   => 'required|string',
         ]);
 
-        $category = new Category();
+        
+        // Category::create($request->except('_token'));
+        Category::create($request->all());
 
-        $category->name         = $request->name;
-        $category->description  = $request->description;
-        $category->save();
+        /* OLD WAY */
+        // $category = new Category();
+        // $category->name         = $request->name;
+        // $category->description  = $request->description;
+        // $category->save();
 
         return redirect()->route('categories.index')->with('success', 'Category Added Successfully');
     }
@@ -67,9 +71,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $category = Category::findOrFail($id);
+        // $category = Category::findOrFail($id);
         return view('web.categories.edit', compact('category'));
     }
 
